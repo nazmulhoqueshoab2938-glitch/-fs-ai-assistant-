@@ -1,0 +1,271 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FS AI Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .assistant {
+            width: 95%;
+            max-width: 700px;
+            height: 650px;
+            background: #1e293b;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            padding: 20px;
+            background: #334155;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .assistant-message {
+            background: #334155;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background: #2563eb;
+            margin-left: auto;
+        }
+
+        .input-area {
+            padding: 15px;
+            background: #334155;
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .send-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .voice-btn {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .clear-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        @media (max-width: 600px) {
+            .assistant {
+                height: 90vh;
+            }
+
+            .input-area {
+                flex-wrap: wrap;
+            }
+
+            .input-area input {
+                width: 100%;
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="assistant">
+
+        <div class="header">
+            <h1>🤖 FS AI Assistant</h1>
+            <p>Your personal AI assistant</p>
+        </div>
+
+        <div class="chat" id="chat">
+            <div class="message assistant-message">
+                Hello! I'm your FS AI Assistant. How can I help you?
+            </div>
+        </div>
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Type your message..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button class="voice-btn" onclick="startVoice()">
+                🎤
+            </button>
+
+            <button class="send-btn" onclick="sendMessage()">
+                Send
+            </button>
+
+            <button class="clear-btn" onclick="clearChat()">
+                Clear
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function sendMessage() {
+
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+
+            if (message === "") {
+                return;
+            }
+
+            addMessage(message, "user-message");
+
+            input.value = "";
+
+            // Temporary response
+            setTimeout(() => {
+                addMessage(
+                    "I'm your FS AI Assistant. AI connection will be added in the next step.",
+                    "assistant-message"
+                );
+            }, 500);
+        }
+
+
+        function addMessage(text, className) {
+
+            const chat = document.getElementById("chat");
+
+            const message = document.createElement("div");
+
+            message.className = "message " + className;
+
+            message.textContent = text;
+
+            chat.appendChild(message);
+
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+
+        function handleEnter(event) {
+
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+
+        }
+
+
+        function clearChat() {
+
+            const chat = document.getElementById("chat");
+
+            chat.innerHTML = `
+                <div class="message assistant-message">
+                    Chat cleared. How can I help you?
+                </div>
+            `;
+
+        }
+
+
+        function startVoice() {
+
+            if (!("webkitSpeechRecognition" in window)) {
+
+                alert("Voice recognition is not supported in this browser.");
+
+                return;
+            }
+
+            const recognition = new webkitSpeechRecognition();
+
+            recognition.lang = "en-US";
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+
+                const text = event.results[0][0].transcript;
+
+                document.getElementById("userInput").value = text;
+
+            };
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
