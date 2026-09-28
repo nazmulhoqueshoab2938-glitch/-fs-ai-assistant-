@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +38,14 @@
             padding: 20px;
             background: #334155;
             text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
         }
 
         .header h1 {
@@ -141,14 +148,25 @@
     <div class="assistant">
 
         <div class="header">
+
+            <!-- FS AI Assistant Logo -->
+            <img
+                src="Gemini_Generated_Image_l1pnk3l1pnk3l1pn.jpg"
+                alt="FS AI Assistant Logo"
+                class="logo"
+            >
+
             <h1>🤖 FS AI Assistant</h1>
             <p>Your personal AI assistant</p>
+
         </div>
 
         <div class="chat" id="chat">
+
             <div class="message assistant-message">
                 Hello! I'm your FS AI Assistant. How can I help you?
             </div>
+
         </div>
 
         <div class="input-area">
@@ -191,12 +209,13 @@
 
             input.value = "";
 
-            // Temporary response
             setTimeout(() => {
+
                 addMessage(
                     "I'm your FS AI Assistant. AI connection will be added in the next step.",
                     "assistant-message"
                 );
+
             }, 500);
         }
 
@@ -268,4 +287,3 @@
 
 </body>
 </html>
-```
